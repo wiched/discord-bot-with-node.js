@@ -1,0 +1,22 @@
+{
+  "name": "discord",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "chucknorris-io": "^1.0.5",
+    "connect-mongo": "^2.0.1",
+    "ddg": "0.0.3",
+    "discord.js": "^11.3.2",
+    "discord.js-commando": "^0.9.0",
+    "fs": "0.0.1-security",
+    "mongodb": "^3.0.7",
+    "mongoose": "^5.0.15",
+    "urban": "^0.3.1"
+  }
+}
