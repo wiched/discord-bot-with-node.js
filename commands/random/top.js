@@ -17,7 +17,7 @@ class Top extends commando.Command {
   async run(message, args) {
     // console.log(message)
 
-    MongoClient.connect(url, function(err, client) {
+    MongoClient.connect(url, function (err, client) {
       if (err) throw err;
       var db = client.db('devbot');
       const resultCursor = db
@@ -29,7 +29,7 @@ class Top extends commando.Command {
         .then(value => {
           let embed = new Discord.RichEmbed();
           embed.setTitle('Top Members');
-          embed.setDescription('The most active members by their level');
+          embed.setDescription('The most active members by their experience');
           value.forEach(result => {
             embed.addField('Name', result.name, true);
             embed.addField('Level', result.level, true);
@@ -38,6 +38,9 @@ class Top extends commando.Command {
           embed.setFooter(`Written by DevBot`);
 
           message.channel.send({ embed });
+        })
+        .catch(err => {
+          console.log(err);
         });
       client.close();
     });
