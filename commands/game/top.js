@@ -8,7 +8,7 @@ class Top extends commando.Command {
   constructor(client) {
     super(client, {
       name: 'top',
-      group: 'random',
+      group: 'game',
       memberName: 'top',
       description: 'Check the game Top statistics'
     });

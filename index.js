@@ -32,6 +32,7 @@ const bot = new commando.Client({
 
 bot.registry.registerGroup('random', 'Random');
 bot.registry.registerGroup('moderator', 'Moderator');
+bot.registry.registerGroup('game', 'Game');
 bot.registry.registerDefaults();
 bot.registry.registerCommandsIn(__dirname + '/commands');
 
@@ -48,31 +49,31 @@ bot.on("message", (message) => {
     if (err) throw err;
     var db = client.db('devbot');
 
-    db.collection('test').findOne({id: message.author.id}, function (findErr, result) {
+    db.collection('test').findOne({ id: message.author.id }, function (findErr, result) {
 
       if (message.author.name == "DevBot" || message.author.id == "435773786982187028") return;
       if (findErr) throw findErr;
-      if(result === null || result.length < 1) {
+      if (result === null || result.length < 1) {
         // select author id and run generate xp
 
-        db.collection('test').insert({xp: generateXp(), id: `${message.author.id}`, level: 0, name: `${message.author.username}`});
-          //  console.log('no info about that user')
+        db.collection('test').insert({ xp: generateXp(), id: `${message.author.id}`, level: 0, name: `${message.author.username}` });
+        //  console.log('no info about that user')
       } else {
 
 
-        db.collection('test').update({id: message.author.id},{$inc: {xp: generateXp()}}, false);
+        db.collection('test').update({ id: message.author.id }, { $inc: { xp: generateXp() } }, false);
 
-        let xp = db.collection('test').findOne({id: message.author.id}).then(function(numItems) {
+        let xp = db.collection('test').findOne({ id: message.author.id }).then(function (numItems) {
           //  console.log(numItems)
           let curLevel = Math.floor(0.1 * Math.sqrt(numItems.xp));
           if (curLevel > numItems.level) {
             // Level up!
             console.log(curLevel)
-            db.collection('test').updateOne({id: message.author.id}, { $set: { "level" : curLevel } })
+            db.collection('test').updateOne({ id: message.author.id }, { $set: { "level": curLevel } })
 
             message.reply(`You"ve leveled up to level **${curLevel}**! Ain"t that dandy?`);
           }
-         })
+        })
 
       }
 

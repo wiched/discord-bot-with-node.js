@@ -8,7 +8,7 @@ class Roulette extends commando.Command {
   constructor(client) {
     super(client, {
       name: 'roulette',
-      group: 'random',
+      group: 'game',
       memberName: 'roulette',
       description: 'Gamble with your experience'
     });
@@ -35,16 +35,16 @@ class Roulette extends commando.Command {
                 const roll = Math.floor(Math.random() * 6) + 1;
                 if (gamble > numItems.xp) return;
 
-                if (roll >= 3) {
+                if (roll > 4) {
                   db
                     .collection('test')
                     .update(
                       { id: message.author.id },
-                      { $inc: { xp: parseInt(gamble) } },
+                      { $inc: { xp: parseInt(gamble) * 2 } },
                       false
                     );
                   message.reply(
-                    `Amazing! You rolled a ${roll} and won ${gamble} points`
+                    `Amazing! You rolled a ${roll} and won ${gamble * 2} points`
                   );
                 } else {
                   db
