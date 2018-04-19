@@ -24,23 +24,22 @@ class Top extends commando.Command {
         .collection('test')
         .find({})
         .sort({ xp: -1 })
-        .limit(5);
+        .limit(8)
+        .toArray()
+        .then(value => {
+          let embed = new Discord.RichEmbed();
+          embed.setTitle('Top Members');
+          embed.setDescription('The most active members by their level');
+          value.forEach(result => {
+            embed.addField('Name', result.name, true);
+            embed.addField('Level', result.level, true);
+            embed.addField('XP', result.xp, true);
+          });
+          embed.setFooter(`Written by DevBot`);
 
-      let embed = new Discord.RichEmbed();
-      embed.setTitle('Top Members');
-      embed.setDescription('The most active members by their level');
-      resultCursor.forEach(result => {
-        embed.addField('Name', result.name, true);
-        console.log(result.name);
-        embed.addField('Level', result.level, true);
-        console.log(result.level);
-        embed.addField('XP', result.xp, true);
-      });
-
-      // .addField('Example', json.example, true)
-      embed.setFooter(`Written by DevBot`);
-
-      message.channel.send({ embed });
+          message.channel.send({ embed });
+        });
+      client.close();
     });
   }
 }
