@@ -43,6 +43,18 @@ bot.on('guildMemberAdd', member => {
 });
 
 // Console log if bot is connected successfully
+
+bot.on("message", message => {
+  let command = message.content.split(" ")[0];
+  let args = message.content.split(" ").slice(1);
+
+  if (command === "!say") {
+    message.delete()
+    message.channel.send(args.join(" "));
+  }
+})
+
+
 bot.on('ready', () => console.log('DevBot is connected!'))
 bot.on("message", (message) => {
   MongoClient.connect(url, function (err, client) {

@@ -33,9 +33,22 @@ class Roulette extends commando.Command {
               let gamble = Number(args);
               if (!isNaN(gamble)) {
                 const roll = Math.floor(Math.random() * 6) + 1;
-                if (gamble > numItems.xp) return;
+                if (gamble > numItems.xp) {
+                  message.reply('Sorry but you do not have the XP to enter the game');
+                  console.log(`I am ${message.author.username} and my id is ${message.author.id}`)
+                  console.log(`I gamble with ${numItems.xp} but i need ${gamble}`)
+                  return
+                }
+                if (!args) {
+
+                  message.channel.send(
+                    'You have to enter number that you want to gamble with'
+                  );
+                  return
+                }
 
                 if (roll > 4) {
+                  console.log(roll)
                   db
                     .collection('test')
                     .update(
@@ -46,7 +59,8 @@ class Roulette extends commando.Command {
                   message.reply(
                     `Amazing! You rolled a ${roll} and won ${gamble * 2} points`
                   );
-                } else {
+                } else if (roll <= 4) {
+                  console.log(roll)
                   db
                     .collection('test')
                     .update(
@@ -58,10 +72,6 @@ class Roulette extends commando.Command {
                     `Sorry but you rolled a ${roll}. You lose ${gamble} points`
                   );
                 }
-              } else {
-                message.channel.send(
-                  'You have to enter number that you want to gamble with'
-                );
               }
 
               //  message.channel.send({embed});
